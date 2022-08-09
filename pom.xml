@@ -63,6 +63,12 @@
       <artifactId>hibernate-validator</artifactId>
       <version>6.2.3.Final</version>
     </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.4.1</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>SpringCRUD_App1</finalName>
