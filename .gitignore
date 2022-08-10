@@ -37,4 +37,9 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
-
+.idea/
+!/.idea/
+/.idea/dbnavigator.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/uiDesigner.xml
+/.idea/git_toolbox_prj.xml
