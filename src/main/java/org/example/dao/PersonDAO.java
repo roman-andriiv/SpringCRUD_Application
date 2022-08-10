@@ -1,6 +1,9 @@
 package org.example.dao;
 
 import org.example.models.Person;
+import org.example.models.PersonMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -12,48 +15,15 @@ import java.util.List;
  */
 @Component
 public class PersonDAO {
-    private static int PEOPLE_COUNT;
+    private final JdbcTemplate jdbcTemplate;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/spring_crud_app_db";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "admin4173";
-    private static Connection connection;
-
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    @Autowired
+    public PersonDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Person> index() {
-        List<Person> people = new ArrayList<>();
-
-        try {
-            Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM person";
-            ResultSet resultSet = statement.executeQuery(SQL);
-
-            while (resultSet.next()) {
-                Person person = new Person();
-
-                person.setId(resultSet.getInt("id"));
-                person.setName(resultSet.getString("name"));
-                person.setEmail(resultSet.getString("email"));
-                person.setAge(resultSet.getInt("age"));
-
-                people.add(person);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return people;
+        return jdbcTemplate.query("SELECT * FROM people", new PersonMapper());
     }
 
     public Person show(final int id) {
@@ -118,7 +88,7 @@ public class PersonDAO {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM person WHERE id=?");
 
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
