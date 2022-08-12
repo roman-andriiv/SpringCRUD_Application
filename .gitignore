@@ -43,11 +43,12 @@ build/
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/uiDesigner.xml
 /.idea/git_toolbox_prj.xml
-/src/main/resources/database.properties
-!/src/main/resources/database.properties
+
 
 /.idea/.gitignore
 /.idea/checkstyle-idea.xml
 /.idea/encodings.xml
 /.idea/misc.xml
 /.idea/vcs.xml
+!/src/main/resources/database.properties
+
