@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.models.Person;
+import org.example.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Roman_Andriiv
@@ -26,6 +28,10 @@ public class PersonDAO {
 
     public List<Person> index() {
         return jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
+    }
+    public Optional<Person> show(String email){
+        return jdbcTemplate.query("SELECT * FROM person WHERE email =?", new Object[]{email},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
     }
 
     public Person show(int id) {
