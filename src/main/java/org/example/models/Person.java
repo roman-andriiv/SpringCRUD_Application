@@ -1,38 +1,47 @@
 package org.example.models;
 
-import javax.validation.constraints.*;
+
+//import jakarta.persistence.*;
+//import jakarta.persistence.Column;
+//import jakarta.persistence.Id;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.Table;
+//import jakarta.persistence.Entity;
+
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 
 /**
  * @author Roman_Andriiv
  */
+@Entity
+@Table(name = "Person")
 public class Person {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
+    @Column(name = "name")
     private String name;
 
     @Min(value = 0, message = "Age should be greater than 0")
+    @Column(name = "age")
     private int age;
 
-    @NotEmpty(message = "Email should not be empty")
-    @Email(message = "Email should be valid")
-    private String email;
-
-    @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}",
-            message = "Your address should be in the format: Country, City, Postal Code(6 digits)")
-    private String address;
-
     public Person() {
+
     }
 
-    public Person(int id, String name, int age, String email, String address) {
-        this.id = id;
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
-        this.email = email;
-        this.address = address;
     }
 
     public int getId() {
@@ -59,19 +68,12 @@ public class Person {
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
